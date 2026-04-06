@@ -1,0 +1,35 @@
+# RELEASE — zsh-btrfs-snapper
+
+Version:  v1.0
+Date:     2026-04-06
+Platform: openSUSE Tumbleweed
+Shell:    zsh 5.9+
+Requires: Oh My Zsh, btrfs-progs, snapper
+
+---
+
+## What's in this release
+
+### Initial production release
+- Deployed and validated on a live openSUSE Tumbleweed system
+- Every alias and function tested against real btrfs filesystem and snapper configuration
+
+### Snapshot management (snapper)
+- `snap-list` — colorized output replacing raw `snapper list`: current snapshot in green, important snapshots in yellow, summary line (total / singles / pre / post / importants)
+- `snap-new` — creates snapshot with `--cleanup-algorithm timeline` automatically
+- `snap-rollback` — requires explicit confirmation before executing, displays snapshot list if no argument
+- `snap-compare` — wraps `snapper diff` with argument validation
+- `snap-important` / `snap-manual` — filtered views not available in native snapper
+- Multi-config aliases: `snap-list-root`, `snap-list-home`, `snap-create-root`, `snap-create-home`
+
+### Filesystem maintenance (btrfs)
+- `btrfs-scrub` — starts scrub and immediately shows live status
+- `btrfs-balance` — accepts configurable dusage/musage thresholds (default 50%)
+- `btrfs-balance-threshold` — conditional balance: only runs if disk usage exceeds defined threshold
+- `btrfs-snap-size` — uses btrfs qgroup to report actual space used by snapshots (falls back to du)
+- `btrfs-health` — aggregated report: filesystem usage + device error stats + scrub status + snapshot summary
+
+### Design decisions
+- `btrfs-defrag` intentionally excluded — defragmentation breaks Copy-on-Write on btrfs and increases disk usage
+- All functions use `function name { }` syntax to avoid zsh alias/function conflicts on reload
+- `rollback-last` provided without confirmation for expert use — documented as such
