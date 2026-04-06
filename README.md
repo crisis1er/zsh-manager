@@ -19,37 +19,32 @@ Deployed and validated on a live openSUSE Tumbleweed system.
 
 ```mermaid
 flowchart TD
-    classDef plugin  fill:#1e3a5f,stroke:#60a5fa,stroke-width:2px,color:#ffffff
+    classDef plugin  fill:#1e3a5f,stroke:#93c5fd,stroke-width:2px,color:#ffffff
     classDef snap    fill:#14532d,stroke:#86efac,stroke-width:2px,color:#ffffff
     classDef btrfs   fill:#78350f,stroke:#fcd34d,stroke-width:2px,color:#ffffff
-    classDef native  fill:#374151,stroke:#9ca3af,stroke-width:2px,color:#ffffff
+    classDef native  fill:#1f2937,stroke:#6b7280,stroke-width:2px,color:#9ca3af
     classDef safety  fill:#7f1d1d,stroke:#fca5a5,stroke-width:2px,color:#ffffff
 
-    PLUGIN[zsh-btrfs-snapper\nOh My Zsh plugin]:::plugin
+    PLUGIN[zsh-btrfs-snapper — Oh My Zsh plugin]:::plugin
 
-    subgraph SNAPPER[Snapshot management]
+    PLUGIN --> SNAPPER
+    PLUGIN --> BTRFS
+
+    subgraph SNAPPER[" Snapshot management — snapper "]
         SL[snap-list\ncolorized + summary]:::snap
         SN[snap-new\nauto cleanup-algorithm]:::snap
         SR[snap-rollback\nmandatory confirmation]:::safety
         SC[snap-compare\ndiff between snapshots]:::snap
-        SF[snap-important\nsnap-manual\nfiltered views]:::snap
+        SF[snap-important / snap-manual\nfiltered views]:::snap
     end
 
-    subgraph BTRFS[Filesystem maintenance]
+    subgraph BTRFS[" Filesystem maintenance — btrfs-progs "]
         BS[btrfs-scrub\nstart + live status]:::btrfs
         BB[btrfs-balance\nconfigurable thresholds]:::btrfs
         BT[btrfs-balance-threshold\nconditional balance]:::btrfs
         BH[btrfs-health\naggregated report]:::btrfs
         BZ[btrfs-snap-size\nqgroup disk usage]:::btrfs
     end
-
-    NATIVE_S[snapper]:::native
-    NATIVE_B[btrfs-progs]:::native
-
-    PLUGIN --> SNAPPER
-    PLUGIN --> BTRFS
-    SNAPPER --> NATIVE_S
-    BTRFS --> NATIVE_B
 ```
 
 ---
