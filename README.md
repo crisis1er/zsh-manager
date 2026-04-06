@@ -18,24 +18,23 @@ Deployed and validated on a live openSUSE Tumbleweed system.
 <sub>⚠️ If the diagram is not visible, refresh the page — Mermaid rendering may take a moment.</sub>
 
 ```mermaid
-flowchart TD
+flowchart LR
     classDef plugin  fill:#1e3a5f,stroke:#93c5fd,stroke-width:2px,color:#ffffff
     classDef snap    fill:#14532d,stroke:#86efac,stroke-width:2px,color:#ffffff
     classDef btrfs   fill:#78350f,stroke:#fcd34d,stroke-width:2px,color:#ffffff
     classDef safety  fill:#7f1d1d,stroke:#fca5a5,stroke-width:2px,color:#ffffff
     classDef label   fill:#111827,stroke:#374151,stroke-width:1px,color:#9ca3af
 
-    PLUGIN[zsh-btrfs-snapper — Oh My Zsh plugin]:::plugin
-
-    PLUGIN --> S_LABEL[Snapshot management — snapper]:::label
-    PLUGIN --> B_LABEL[Filesystem maintenance — btrfs-progs]:::label
-
+    PLUGIN1[zsh-btrfs-snapper\nOh My Zsh plugin]:::plugin
+    PLUGIN1 --> S_LABEL[Snapshot management\nsnapper]:::label
     S_LABEL --> SL[snap-list\ncolorized + summary]:::snap
     S_LABEL --> SN[snap-new\nauto cleanup-algorithm]:::snap
     S_LABEL --> SR[snap-rollback\nmandatory confirmation]:::safety
     S_LABEL --> SC[snap-compare\ndiff between snapshots]:::snap
     S_LABEL --> SF[snap-important / snap-manual\nfiltered views]:::snap
 
+    PLUGIN2[zsh-btrfs-snapper\nOh My Zsh plugin]:::plugin
+    PLUGIN2 --> B_LABEL[Filesystem maintenance\nbtrfs-progs]:::label
     B_LABEL --> BS[btrfs-scrub\nstart + live status]:::btrfs
     B_LABEL --> BB[btrfs-balance\nconfigurable thresholds]:::btrfs
     B_LABEL --> BT[btrfs-balance-threshold\nconditional balance]:::btrfs
