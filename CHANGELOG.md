@@ -9,7 +9,7 @@ All notable changes to this plugin are documented here.
 ### Added
 - Initial release — Oh My Zsh plugin for btrfs and snapper on openSUSE Tumbleweed
 - `snap-list` — colorized snapshot list (green = current, yellow = important) with summary
-- `snap-new <description>` — create snapshot with automatic timeline cleanup algorithm
+- `snap-new` — interactive guided snapshot creation (reason, config, type, confirmation, colored feedback)
 - `snap-del <id>` — delete snapshot with usage hint if no argument
 - `snap-rollback <id>` — rollback with mandatory confirmation prompt
 - `snap-compare <id1> <id2>` — diff files changed between two snapshots

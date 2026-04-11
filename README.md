@@ -80,7 +80,7 @@ source ~/.zshrc
 | Command | Description |
 |---|---|
 | `snap-list` | Colorized snapshot list — current in green, important in yellow — with summary |
-| `snap-new "description"` | Create snapshot with automatic `timeline` cleanup algorithm |
+| `snap-new` | Interactive guided snapshot creation — prompts for reason, config, type, and confirmation |
 | `snap-del <id>` | Delete snapshot — displays list if no argument provided |
 | `snap-rollback <id>` | Rollback with mandatory confirmation — displays list if no argument |
 | `snap-compare <id1> <id2>` | Show files changed between two snapshots |
