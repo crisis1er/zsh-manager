@@ -1,0 +1,52 @@
+# ============================================================
+# squid-tumbleweed-config — .gitignore
+# crisis1er — https://github.com/crisis1er
+# ============================================================
+
+# ------------------------------
+# Editor temporary files
+# ------------------------------
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+
+# ------------------------------
+# macOS artifacts
+# ------------------------------
+.DS_Store
+
+# ------------------------------
+# Backup and patch artifacts
+# ------------------------------
+*.bak
+*.orig
+*.rej
+
+# ------------------------------
+# Squid — auto-generated files
+# (maintained by systemd timer, not versioned)
+# ------------------------------
+acl/pgl_yoyo.domains
+
+# ------------------------------
+# Squid — runtime files
+# (never commit PID or socket files)
+# ------------------------------
+*.pid
+*.sock
+
+# ------------------------------
+# Log files
+# (may contain private IPs, DNS queries, URLs)
+# ------------------------------
+*.log
+
+# ------------------------------
+# Environment and secrets
+# (IPs, credentials, tokens — never commit)
+# ------------------------------
+.env
+.env.*
+secrets.*
