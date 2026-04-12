@@ -1,7 +1,7 @@
 # RELEASE — zsh-btrfs-snapper
 
-Version:  v1.0
-Date:     2026-04-06
+Version:  v2.0
+Date:     2026-04-12
 Platform: openSUSE Tumbleweed
 Shell:    zsh 5.9+
 Requires: Oh My Zsh, btrfs-progs, snapper
@@ -10,15 +10,24 @@ Requires: Oh My Zsh, btrfs-progs, snapper
 
 ## What's in this release
 
-### Initial production release
+### v2.0 — Modular architecture + snap wrapper + English translation
+- Translated all comments and output messages to English
+- `snap-list`, `snap-new`, `snap-rollback` extracted to independent plugins
+  — `zsh-snap-list` v3.1, `zsh-snap-new` v2.1, `zsh-snap-rollback` v1.2
+  — stubs remain for backward compatibility when plugins are not loaded
+- `snap()` — new unified entry point with interactive menu:
+  - (1) snap-list — list snapshots
+  - (2) snap-new — create a snapshot
+  - (3) snap-rollback — rollback to a snapshot
+  — colored ANSI box border, delegates to independent plugins
+
+### v1.0 — Initial release
 - Deployed and validated on a live openSUSE Tumbleweed system
 - Every alias and function tested against real btrfs filesystem and snapper configuration
 
 ### Snapshot management (snapper)
-- `snap-list` — colorized output replacing raw `snapper list`: current snapshot in green, important snapshots in yellow, summary line (total / singles / pre / post / importants)
-- `snap-new` — creates snapshot with `--cleanup-algorithm timeline` automatically
-- `snap-rollback` — requires explicit confirmation before executing, displays snapshot list if no argument
-- `snap-compare` — wraps `snapper diff` with argument validation
+- `snap-del <id>` — delete snapshot with usage hint if no argument
+- `snap-compare <id1> <id2>` — diff files changed between two snapshots
 - `snap-important` / `snap-manual` — filtered views not available in native snapper
 - Multi-config aliases: `snap-list-root`, `snap-list-home`, `snap-create-root`, `snap-create-home`
 

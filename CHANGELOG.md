@@ -4,6 +4,26 @@ All notable changes to this plugin are documented here.
 
 ---
 
+## [2.0] — 2026-04-12
+
+### Changed
+- Translated all comments and output messages to English
+- Replaced `snap-list`, `snap-new`, `snap-rollback` full function bodies with lightweight stubs
+  — these features are now provided by independent plugins (`zsh-snap-list`, `zsh-snap-new`, `zsh-snap-rollback`)
+  — stubs display a clear install message if the plugin is not loaded
+
+### Added
+- `snap()` — unified entry point with interactive menu: list / create / rollback
+  — delegates to the three independent plugins
+  — colored display with ANSI box border
+
+### Removed
+- Embedded `snap-list` implementation (moved to `zsh-snap-list` plugin)
+- Embedded `snap-new` implementation (moved to `zsh-snap-new` plugin)
+- Embedded `snap-rollback` implementation (moved to `zsh-snap-rollback` plugin)
+
+---
+
 ## [1.0] — 2026-04-06
 
 ### Added
