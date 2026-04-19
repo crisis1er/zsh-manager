@@ -1,5 +1,5 @@
 # ============================================================
-# squid-tumbleweed-config — .gitignore
+# zsh-snap-man — .gitignore
 # crisis1er — https://github.com/crisis1er
 # ============================================================
 
@@ -21,21 +21,9 @@
 # Backup and patch artifacts
 # ------------------------------
 *.bak
+*.bak.*
 *.orig
 *.rej
-
-# ------------------------------
-# Squid — auto-generated files
-# (maintained by systemd timer, not versioned)
-# ------------------------------
-acl/pgl_yoyo.domains
-
-# ------------------------------
-# Squid — runtime files
-# (never commit PID or socket files)
-# ------------------------------
-*.pid
-*.sock
 
 # ------------------------------
 # Log files
