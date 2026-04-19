@@ -82,13 +82,16 @@ function snap-man {
     echo -e "  ${YELLOW}(1)${RESET} snap-list     ${CYAN}[snap-l]${RESET} — list and filter snapshots"
     echo -e "  ${GREEN}(2)${RESET} snap-new      ${CYAN}[snap-n]${RESET} — guided snapshot creation"
     echo -e "  ${RED}(3)${RESET} snap-rollback ${CYAN}[snap-r]${RESET} — rollback to a chosen snapshot"
+    echo -e "  ${CYAN}(h)${RESET} snap-help     ${CYAN}[snap-h]${RESET} — show all available commands"
+    echo -e "  ${CYAN}    snap-man      [man-s]${RESET}     — shortcut to this manager"
     echo -e "  ${CYAN}(q)${RESET} quit"
-    printf "\nChoice [1/2/3/q] : "
+    printf "\nChoice [1/2/3/h/q] : "
     read -r choice < /dev/tty
     case "$choice" in
         1) snap-list ;;
         2) snap-new ;;
         3) snap-rollback ;;
+        h|H) snap-help ;;
         q|Q) echo -e "${YELLOW}Cancelled.${RESET}" ; return 0 ;;
         *) echo -e "${RED}Invalid choice.${RESET}" ; return 1 ;;
     esac
@@ -175,12 +178,35 @@ function btrfs-health {
     snap-list
 }
 
+# ── snap-help — list all available commands ───────────────────────────────────
+function snap-help {
+    local CYAN="\033[36m" BOLD="\033[1m" RESET="\033[0m" YELLOW="\033[33m"
+    local GREEN="\033[32m" RED="\033[31m"
+    echo -e "${BOLD}Snap Manager — available commands${RESET}\n"
+    echo -e "  ${CYAN}snap-man${RESET}  ${CYAN}[man-s]${RESET}     — open the unified manager menu"
+    echo -e "  ${CYAN}snap-help${RESET} ${CYAN}[snap-h]${RESET} — show this help"
+    echo -e "  ${YELLOW}snap-list${RESET} ${CYAN}[snap-l]${RESET} — list and filter snapshots"
+    echo -e "  ${GREEN}snap-new${RESET}  ${CYAN}[snap-n]${RESET} — guided snapshot creation"
+    echo -e "  ${RED}snap-rollback${RESET} ${CYAN}[snap-r]${RESET} — rollback to a chosen snapshot"
+    echo -e "  ${CYAN}snap-del${RESET}  ${CYAN}[snap-d]${RESET} — delete one or more snapshots"
+    echo -e "  ${CYAN}snap-compare${RESET} ${CYAN}[snap-c]${RESET} — compare two snapshots"
+    echo -e "  ${CYAN}snap-important${RESET}   — list important snapshots only"
+    echo -e "  ${CYAN}snap-manual${RESET}      — list manual snapshots only"
+    echo ""
+    echo -e "  ${CYAN}btrfs-health${RESET}              — full btrfs health report"
+    echo -e "  ${CYAN}btrfs-scrub${RESET}               — start scrub and show status"
+    echo -e "  ${CYAN}btrfs-balance${RESET}             — balance with configurable thresholds"
+    echo -e "  ${CYAN}btrfs-balance-threshold${RESET}   — conditional balance by disk usage"
+    echo -e "  ${CYAN}btrfs-snap-size${RESET}           — disk space used by snapshots"
+}
+
 # ------------------------------------------------------------
 # Short aliases — fast typing, no ambiguity
 # ------------------------------------------------------------
-alias snap-m='snap-man'
+alias man-s='snap-man'
 alias snap-l='snap-list'
 alias snap-n='snap-new'
 alias snap-r='snap-rollback'
 alias snap-d='snap-del'
 alias snap-c='snap-compare'
+alias snap-h='snap-help'
