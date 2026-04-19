@@ -1,6 +1,7 @@
 # ============================================================
-# btrfs-snapper — Oh My Zsh plugin for openSUSE Tumbleweed
-# Enhanced btrfs and snapper management
+# snap-man — Oh My Zsh plugin for openSUSE Tumbleweed
+# Snap Manager + Enhanced btrfs and snapper management
+# Version: 2.1 — 2026-04-19
 # ============================================================
 
 # ------------------------------------------------------------
@@ -61,22 +62,34 @@ function snap-del {
 }
 
 # ── Snap manager — unified entry point ───────────────────────────────────────
-# Usage : snap
-function snap {
+# Usage : snap-man
+function snap-man {
     local CYAN="\033[36m" BOLD="\033[1m" RESET="\033[0m" RED="\033[31m"
+    local YELLOW="\033[33m" GREEN="\033[32m"
+
     echo -e "${CYAN}╔══════════════════════════════════════════════════════════════╗${RESET}"
     echo -e "${CYAN}║${RESET}${BOLD}              Snap Manager — SafeITExperts                     ${RESET}${CYAN}║${RESET}"
+    echo -e "${CYAN}║${RESET}              Btrfs Snapshot Manager for openSUSE Tumbleweed  ${CYAN}║${RESET}"
+    echo -e "${CYAN}║${RESET}              Version v2.1 — 2026-04-19                       ${CYAN}║${RESET}"
+    echo -e "${CYAN}╠══════════════════════════════════════════════════════════════╣${RESET}"
+    echo -e "${CYAN}║${RESET}  Manage your system snapshots safely from one place.         ${CYAN}║${RESET}"
+    echo -e "${CYAN}║${RESET}                                                              ${CYAN}║${RESET}"
+    echo -e "${CYAN}║${RESET}  ${YELLOW}→${RESET} ${BOLD}List${RESET}     — view all snapshots with colors and filters   ${CYAN}║${RESET}"
+    echo -e "${CYAN}║${RESET}  ${GREEN}→${RESET} ${BOLD}New${RESET}      — create a snapshot before any system change    ${CYAN}║${RESET}"
+    echo -e "${CYAN}║${RESET}  ${RED}→${RESET} ${BOLD}Rollback${RESET} — restore your system to a previous snapshot    ${CYAN}║${RESET}"
     echo -e "${CYAN}╚══════════════════════════════════════════════════════════════╝${RESET}"
     echo ""
-    echo -e "  ${CYAN}(1)${RESET} snap-list     — list snapshots"
-    echo -e "  ${CYAN}(2)${RESET} snap-new      — create a snapshot"
-    echo -e "  ${CYAN}(3)${RESET} snap-rollback — rollback to a snapshot"
-    printf "\nChoice [1/2/3] : "
-    read -r choice
+    echo -e "  ${YELLOW}(1)${RESET} snap-list     ${CYAN}[snap-l]${RESET} — list and filter snapshots"
+    echo -e "  ${GREEN}(2)${RESET} snap-new      ${CYAN}[snap-n]${RESET} — guided snapshot creation"
+    echo -e "  ${RED}(3)${RESET} snap-rollback ${CYAN}[snap-r]${RESET} — rollback to a chosen snapshot"
+    echo -e "  ${CYAN}(q)${RESET} quit"
+    printf "\nChoice [1/2/3/q] : "
+    read -r choice < /dev/tty
     case "$choice" in
         1) snap-list ;;
         2) snap-new ;;
         3) snap-rollback ;;
+        q|Q) echo -e "${YELLOW}Cancelled.${RESET}" ; return 0 ;;
         *) echo -e "${RED}Invalid choice.${RESET}" ; return 1 ;;
     esac
 }
@@ -161,3 +174,13 @@ function btrfs-health {
     echo "--- Snapshots ---"
     snap-list
 }
+
+# ------------------------------------------------------------
+# Short aliases — fast typing, no ambiguity
+# ------------------------------------------------------------
+alias snap-m='snap-man'
+alias snap-l='snap-list'
+alias snap-n='snap-new'
+alias snap-r='snap-rollback'
+alias snap-d='snap-del'
+alias snap-c='snap-compare'
