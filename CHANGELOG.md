@@ -4,6 +4,26 @@ All notable changes to this plugin are documented here.
 
 ---
 
+## [2.1] — 2026-04-19
+
+### Changed
+- Renamed plugin directory and entry point: `btrfs-snapper` → `snap-man` (avoids collision with system `snap` command — DEC-016)
+- Renamed unified entry point: `snap()` → `snap-man()` (DEC-016)
+
+### Added
+- `snap-help` — display all available commands with descriptions
+- `man-s` alias — quick access to `snap-help`
+- Short aliases for all commands (DEC-016):
+  - `snap-m` → `snap-man` (unified manager)
+  - `snap-l` → `snap-list`
+  - `snap-n` → `snap-new`
+  - `snap-r` → `snap-rollback`
+  - `snap-d` → `snap-del`
+  - `snap-c` → `snap-compare`
+- DEC-017 compliant banner (CYAN border, version + date, SafeITExperts)
+
+---
+
 ## [2.0] — 2026-04-12
 
 ### Changed

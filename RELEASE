@@ -1,7 +1,7 @@
-# RELEASE — zsh-btrfs-snapper
+# RELEASE — zsh-snap-man
 
-Version:  v2.0
-Date:     2026-04-12
+Version:  v2.1
+Date:     2026-04-19
 Platform: openSUSE Tumbleweed
 Shell:    zsh 5.9+
 Requires: Oh My Zsh, btrfs-progs, snapper
@@ -10,35 +10,32 @@ Requires: Oh My Zsh, btrfs-progs, snapper
 
 ## What's in this release
 
-### v2.0 — Modular architecture + snap wrapper + English translation
-- Translated all comments and output messages to English
-- `snap-list`, `snap-new`, `snap-rollback` extracted to independent plugins
-  — `zsh-snap-list` v3.1, `zsh-snap-new` v2.1, `zsh-snap-rollback` v1.2
-  — stubs remain for backward compatibility when plugins are not loaded
-- `snap()` — new unified entry point with interactive menu:
-  - (1) snap-list — list snapshots
-  - (2) snap-new — create a snapshot
-  - (3) snap-rollback — rollback to a snapshot
-  — colored ANSI box border, delegates to independent plugins
+### v2.1 — Rename snap-man + short aliases + banner
+- Renamed plugin and entry point: `btrfs-snapper` → `snap-man` (DEC-016)
+- `snap-man` — unified interactive menu: list / create / rollback
+- Short aliases: `snap-m`, `snap-l`, `snap-n`, `snap-r`, `snap-d`, `snap-c` (DEC-016)
+- `snap-help` / `man-s` — display all available commands
+- DEC-017 compliant banner (CYAN border, version + date, SafeITExperts)
 
-### v1.0 — Initial release
-- Deployed and validated on a live openSUSE Tumbleweed system
-- Every alias and function tested against real btrfs filesystem and snapper configuration
+### v2.0 — Modular architecture + English translation
+- `snap-list`, `snap-new`, `snap-rollback` extracted to independent plugins
+  — stubs remain for backward compatibility when plugins are not loaded
+- `snap()` — unified entry point with interactive menu
 
 ### Snapshot management (snapper)
 - `snap-del <id>` — delete snapshot with usage hint if no argument
 - `snap-compare <id1> <id2>` — diff files changed between two snapshots
-- `snap-important` / `snap-manual` — filtered views not available in native snapper
+- `snap-important` / `snap-manual` — filtered views
 - Multi-config aliases: `snap-list-root`, `snap-list-home`, `snap-create-root`, `snap-create-home`
 
 ### Filesystem maintenance (btrfs)
 - `btrfs-scrub` — starts scrub and immediately shows live status
-- `btrfs-balance` — accepts configurable dusage/musage thresholds (default 50%)
-- `btrfs-balance-threshold` — conditional balance: only runs if disk usage exceeds defined threshold
-- `btrfs-snap-size` — uses btrfs qgroup to report actual space used by snapshots (falls back to du)
-- `btrfs-health` — aggregated report: filesystem usage + device error stats + scrub status + snapshot summary
+- `btrfs-balance` — configurable dusage/musage thresholds (default 50%)
+- `btrfs-balance-threshold` — conditional balance based on actual disk usage
+- `btrfs-snap-size` — real space used by snapshots via btrfs qgroup
+- `btrfs-health` — aggregated report: usage + device stats + scrub + snapshot summary
 
 ### Design decisions
-- `btrfs-defrag` intentionally excluded — defragmentation breaks Copy-on-Write on btrfs and increases disk usage
-- All functions use `function name { }` syntax to avoid zsh alias/function conflicts on reload
-- `rollback-last` provided without confirmation for expert use — documented as such
+- `btrfs-defrag` intentionally excluded — breaks Copy-on-Write on btrfs
+- All functions use `function name { }` syntax
+- `rollback-last` provided without confirmation for expert use
