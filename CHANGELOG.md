@@ -4,6 +4,14 @@ All notable changes to this plugin are documented here.
 
 ---
 
+## [2.3] — 2026-04-19
+
+### Added
+- `man/zsh-manager.1` — man page (section 1) documenting all commands, aliases, stubs, and requirements
+- Plugin file renamed: `snap-man.plugin.zsh` → `zsh-manager.plugin.zsh`
+
+---
+
 ## [2.2] — 2026-04-19
 
 ### Changed

@@ -1,6 +1,6 @@
 # RELEASE — zsh-manager
 
-Version:  v2.2
+Version:  v2.3
 Date:     2026-04-19
 Platform: openSUSE Tumbleweed
 Shell:    zsh 5.9+
@@ -9,6 +9,10 @@ Requires: Oh My Zsh, btrfs-progs, snapper
 ---
 
 ## What's in this release
+
+### v2.3 — Plugin rename + man page (2026-04-19)
+- Plugin file renamed: `snap-man.plugin.zsh` → `zsh-manager.plugin.zsh`
+- Man page added: `man/zsh-manager.1` — full documentation (commands, aliases, stubs, requirements)
 
 ### v2.2 — Btrfs extraction + repo rename zsh-manager (2026-04-19)
 - Repo renamed: zsh-snap-man → zsh-manager (GitHub + local)

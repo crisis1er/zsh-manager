@@ -1,0 +1,143 @@
+.TH ZSH-MANAGER 1 "2026-04-19" "v2.3" "SafeITExperts — zsh-manager"
+.SH NAME
+zsh-manager \- unified dispatcher for btrfs snapshot and filesystem management on openSUSE Tumbleweed
+.SH SYNOPSIS
+.B snap-man
+.br
+.B snap-help
+.br
+.B snap-del
+.RI [ id ]
+.br
+.B snap-compare
+.I id1 id2
+.br
+.B snap-important
+.br
+.B snap-manual
+.SH DESCRIPTION
+.B zsh-manager
+is an Oh My Zsh hub plugin providing a unified dispatcher menu and shared commands for btrfs/snapper management on openSUSE Tumbleweed.
+It coordinates the following independent plugins:
+.RS
+.IP \(bu 2
+.B zsh-snap-new
+\(em guided snapshot creation
+.IP \(bu 2
+.B zsh-snap-list
+\(em colorized snapshot listing
+.IP \(bu 2
+.B zsh-snap-rollback
+\(em interactive rollback
+.IP \(bu 2
+.B zsh-btrfs-scrub
+\(em btrfs scrub management
+.IP \(bu 2
+.B zsh-btrfs-balance
+\(em btrfs balance management
+.IP \(bu 2
+.B zsh-btrfs-health
+\(em btrfs health report
+.RE
+.PP
+If a plugin is not loaded, stub functions display an install hint rather than failing silently.
+.SH COMMANDS
+.TP
+.B snap-man
+Open the unified interactive dispatcher menu. Shortcuts: \fBman-s\fR.
+.TP
+.B snap-help
+List all available commands across the hub and its plugins. Shortcut: \fBsnap-h\fR.
+.TP
+.BI snap-del " id"
+Delete snapshot by ID. Displays the snapshot list if no ID is given.
+Shortcut: \fBsnap-d\fR.
+.TP
+.BI snap-compare " id1 id2"
+Show files changed between two snapshots using \fBsnapper diff\fR.
+Shortcut: \fBsnap-c\fR.
+.TP
+.B snap-important
+Display only snapshots marked \fBimportant=yes\fR.
+.TP
+.B snap-manual
+Display only manually created snapshots (excludes zypper and timeline entries).
+.SH ALIASES
+.SS Short aliases
+.TP
+.B man-s
+snap-man
+.TP
+.B snap-l
+snap-list (via zsh-snap-list)
+.TP
+.B snap-n
+snap-new (via zsh-snap-new)
+.TP
+.B snap-r
+snap-rollback (via zsh-snap-rollback)
+.TP
+.B snap-d
+snap-del
+.TP
+.B snap-c
+snap-compare
+.TP
+.B snap-h
+snap-help
+.SS Multi-config aliases
+.TP
+.B snap-list-root
+sudo snapper -c root list
+.TP
+.B snap-list-home
+sudo snapper -c home list
+.TP
+.B snap-create-root
+sudo snapper -c root create --description
+.TP
+.B snap-create-home
+sudo snapper -c home create --description
+.TP
+.B snap-cleanup
+sudo snapper cleanup number
+.TP
+.B snap-cleanup-all
+sudo snapper cleanup all
+.TP
+.B rollback-last
+sudo snapper rollback (no confirmation — expert use)
+.SH STUBS
+If a plugin is not installed, its function is replaced by a stub that prints an install hint:
+.RS
+snap-list, snap-new, snap-rollback, btrfs-scrub, btrfs-balance, btrfs-balance-threshold, btrfs-snap-size, btrfs-health
+.RE
+.SH REQUIREMENTS
+.IP \(bu 2
+openSUSE Tumbleweed
+.IP \(bu 2
+zsh 5.9+
+.IP \(bu 2
+Oh My Zsh
+.IP \(bu 2
+snapper \(em sudo zypper install snapper
+.IP \(bu 2
+btrfs-progs \(em sudo zypper install btrfs-progs
+.SH FILES
+.TP
+.I ~/.oh-my-zsh/custom/plugins/zsh-manager/zsh-manager.plugin.zsh
+Plugin file (crisis user)
+.TP
+.I /root/.oh-my-zsh/custom/plugins/zsh-manager/zsh-manager.plugin.zsh
+Plugin file (root)
+.SH SEE ALSO
+.BR zsh-snap-new (1),
+.BR zsh-snap-list (1),
+.BR zsh-snap-rollback (1),
+.BR zsh-btrfs-scrub (1),
+.BR zsh-btrfs-balance (1),
+.BR zsh-btrfs-health (1),
+.BR snapper (8),
+.BR btrfs (8)
+.SH AUTHORS
+SafeITExperts \(em https://github.com/crisis1er/zsh-manager

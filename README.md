@@ -1,15 +1,13 @@
-[![Visiteurs](https://visitor-badge.laobi.icu/badge?page_id=crisis1er.zsh-btrfs-snapper)](https://github.com/crisis1er/zsh-btrfs-snapper)
+[![Visiteurs](https://visitor-badge.laobi.icu/badge?page_id=crisis1er.zsh-manager)](https://github.com/crisis1er/zsh-manager)
 ![Platform](https://img.shields.io/badge/platform-openSUSE%20Tumbleweed-73BA25)
 ![Shell](https://img.shields.io/badge/shell-zsh%205.9%2B-blue)
 ![OMZ](https://img.shields.io/badge/Oh%20My%20Zsh-compatible-red)
-![License](https://img.shields.io/badge/license-MIT-green)
-![Version](https://img.shields.io/badge/version-v1.0-orange)
+![License](https://img.shields.io/badge/license-GPL--3.0-blue)
+![Version](https://img.shields.io/badge/version-v2.3-orange)
 
-# zsh-btrfs-snapper
+# zsh-manager
 
-Oh My Zsh plugin for **btrfs** filesystem management and **snapper** snapshot control on openSUSE Tumbleweed — enriched commands, safety guards, and filtered views not available in native tools.
-
-Deployed and validated on a live openSUSE Tumbleweed system.
+Unified dispatcher hub for btrfs snapshot and filesystem management on openSUSE Tumbleweed. Central entry point coordinating the snapshot and maintenance plugin ecosystem.
 
 ---
 
@@ -18,28 +16,27 @@ Deployed and validated on a live openSUSE Tumbleweed system.
 <sub>⚠️ If the diagram is not visible, refresh the page — Mermaid rendering may take a moment.</sub>
 
 ```mermaid
-flowchart LR
-    classDef plugin  fill:#1e3a5f,stroke:#93c5fd,stroke-width:2px,color:#ffffff
-    classDef snap    fill:#14532d,stroke:#86efac,stroke-width:2px,color:#ffffff
-    classDef btrfs   fill:#78350f,stroke:#fcd34d,stroke-width:2px,color:#ffffff
-    classDef safety  fill:#7f1d1d,stroke:#fca5a5,stroke-width:2px,color:#ffffff
-    classDef label   fill:#111827,stroke:#374151,stroke-width:1px,color:#9ca3af
+flowchart TD
+    classDef hub     fill:#1e3a5f,stroke:#93c5fd,stroke-width:2px,color:#ffffff
+    classDef native  fill:#14532d,stroke:#86efac,stroke-width:2px,color:#ffffff
+    classDef plugin  fill:#78350f,stroke:#fcd34d,stroke-width:2px,color:#ffffff
+    classDef stub    fill:#374151,stroke:#9ca3af,stroke-width:1px,color:#d1d5db
 
-    PLUGIN1[zsh-btrfs-snapper\nOh My Zsh plugin]:::plugin
-    PLUGIN1 --> S_LABEL[Snapshot management\nsnapper]:::label
-    S_LABEL --> SL[snap-list\ncolorized + summary]:::snap
-    S_LABEL --> SN[snap-new\nauto cleanup-algorithm]:::snap
-    S_LABEL --> SR[snap-rollback\nmandatory confirmation]:::safety
-    S_LABEL --> SC[snap-compare\ndiff between snapshots]:::snap
-    S_LABEL --> SF[snap-important / snap-manual\nfiltered views]:::snap
+    HUB[zsh-manager\nHub — unified dispatcher]:::hub
 
-    PLUGIN2[zsh-btrfs-snapper\nOh My Zsh plugin]:::plugin
-    PLUGIN2 --> B_LABEL[Filesystem maintenance\nbtrfs-progs]:::label
-    B_LABEL --> BS[btrfs-scrub\nstart + live status]:::btrfs
-    B_LABEL --> BB[btrfs-balance\nconfigurable thresholds]:::btrfs
-    B_LABEL --> BT[btrfs-balance-threshold\nconditional balance]:::btrfs
-    B_LABEL --> BH[btrfs-health\naggregated report]:::btrfs
-    B_LABEL --> BZ[btrfs-snap-size\nqgroup disk usage]:::btrfs
+    HUB --> SNAPMAN[snap-man\nunified menu]:::native
+    HUB --> SNAPHELP[snap-help\nall commands]:::native
+    HUB --> SNAPDEL[snap-del\ndelete snapshot]:::native
+    HUB --> SNAPCMP[snap-compare\ndiff two snapshots]:::native
+    HUB --> SNAPIMP[snap-important\nfiltered view]:::native
+    HUB --> SNAPMAN2[snap-manual\nfiltered view]:::native
+
+    HUB -->|stub| SL[snap-list\nzsh-snap-list]:::plugin
+    HUB -->|stub| SN[snap-new\nzsh-snap-new]:::plugin
+    HUB -->|stub| SR[snap-rollback\nzsh-snap-rollback]:::plugin
+    HUB -->|stub| BS[btrfs-scrub\nzsh-btrfs-scrub]:::plugin
+    HUB -->|stub| BB[btrfs-balance\nzsh-btrfs-balance]:::plugin
+    HUB -->|stub| BH[btrfs-health\nzsh-btrfs-health]:::plugin
 ```
 
 ---
@@ -49,22 +46,35 @@ flowchart LR
 - openSUSE Tumbleweed
 - zsh 5.9+
 - [Oh My Zsh](https://ohmyz.sh/)
-- `btrfs-progs` — `sudo zypper install btrfs-progs`
 - `snapper` — `sudo zypper install snapper`
+- `btrfs-progs` — `sudo zypper install btrfs-progs`
+
+---
+
+## Recommended plugins
+
+| Plugin | Role |
+|---|---|
+| [zsh-snap-new](https://github.com/crisis1er/zsh-snap-new) | guided snapshot creation |
+| [zsh-snap-list](https://github.com/crisis1er/zsh-snap-list) | colorized snapshot listing |
+| [zsh-snap-rollback](https://github.com/crisis1er/zsh-snap-rollback) | interactive rollback |
+| [zsh-btrfs-scrub](https://github.com/crisis1er/zsh-btrfs-scrub) | btrfs scrub management |
+| [zsh-btrfs-balance](https://github.com/crisis1er/zsh-btrfs-balance) | btrfs balance management |
+| [zsh-btrfs-health](https://github.com/crisis1er/zsh-btrfs-health) | btrfs health report |
 
 ---
 
 ## Installation
 
 ```zsh
-git clone https://github.com/crisis1er/zsh-btrfs-snapper \
-  ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/btrfs-snapper
+git clone https://github.com/crisis1er/zsh-manager \
+  ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-manager
 ```
 
-Add `btrfs-snapper` to the plugins list in `~/.zshrc`:
+Add `zsh-manager` to the plugins list in `~/.zshrc`:
 
 ```zsh
-plugins=(... btrfs-snapper)
+plugins=(... zsh-manager)
 ```
 
 Reload:
@@ -75,18 +85,16 @@ source ~/.zshrc
 
 ---
 
-## Snapshot functions
+## Native commands
 
 | Command | Description |
 |---|---|
-| `snap-list` | Colorized snapshot list — current in green, important in yellow — with summary |
-| `snap-new` | Interactive guided snapshot creation — prompts for reason, config, type, and confirmation |
-| `snap-del <id>` | Delete snapshot — displays list if no argument provided |
-| `snap-rollback <id>` | Rollback with mandatory confirmation — displays list if no argument |
+| `snap-man` | Open the unified interactive dispatcher menu |
+| `snap-help` | List all available commands across the hub and its plugins |
+| `snap-del <id>` | Delete snapshot — displays list if no ID given |
 | `snap-compare <id1> <id2>` | Show files changed between two snapshots |
 | `snap-important` | Display only `important=yes` snapshots |
 | `snap-manual` | Display only manually created snapshots (excludes zypper/timeline) |
-| `rollback-last` | Fast rollback to last snapshot — no confirmation, expert use |
 
 ### Multi-config aliases
 
@@ -98,51 +106,45 @@ source ~/.zshrc
 | `snap-create-home "desc"` | Create snapshot in config `home` |
 | `snap-cleanup` | Run snapper cleanup (number algorithm) |
 | `snap-cleanup-all` | Run snapper cleanup all |
+| `rollback-last` | Fast rollback to last snapshot — no confirmation, expert use |
 
 ---
 
-## Btrfs functions
+## Delegated commands (stubs)
 
-| Command | Description |
+If a plugin is not loaded, these functions display an install hint rather than failing silently.
+
+| Command | Plugin required |
 |---|---|
-| `btrfs-scrub [mountpoint]` | Start scrub and display live status (default: `/`) |
-| `btrfs-balance [dusage] [musage]` | Balance with configurable thresholds (default: 50%) |
-| `btrfs-balance-threshold [%]` | Conditional balance — only runs if disk usage exceeds threshold (default: 75%) |
-| `btrfs-snap-size` | Real disk space used by snapshots via btrfs qgroup |
-| `btrfs-health` | Full report: filesystem usage + device errors + scrub status + snapshot summary |
-
-### Scrub aliases
-
-| Command | Description |
-|---|---|
-| `btrfs-scrub-status` | Show current scrub status |
-| `btrfs-scrub-cancel` | Cancel running scrub |
-| `btrfs-scrub-resume` | Resume paused scrub |
-
-### Balance aliases
-
-| Command | Description |
-|---|---|
-| `btrfs-balance-status` | Show current balance status |
-| `btrfs-balance-pause` | Pause running balance |
-| `btrfs-balance-resume` | Resume paused balance |
-| `btrfs-balance-cancel` | Cancel running balance |
-
-### Filesystem aliases
-
-| Command | Description |
-|---|---|
-| `btrfs-df` | `btrfs filesystem df /` |
-| `btrfs-usage` | `btrfs filesystem usage /` |
-| `btrfs-show` | `btrfs filesystem show` |
-| `btrfs-subvols` | List all subvolumes |
-| `btrfs-stats` | Device error statistics |
+| `snap-list` | zsh-snap-list |
+| `snap-new` | zsh-snap-new |
+| `snap-rollback` | zsh-snap-rollback |
+| `btrfs-scrub` | zsh-btrfs-scrub |
+| `btrfs-balance` | zsh-btrfs-balance |
+| `btrfs-balance-threshold` | zsh-btrfs-balance |
+| `btrfs-snap-size` | zsh-btrfs-health |
+| `btrfs-health` | zsh-btrfs-health |
 
 ---
 
-## Design decisions
+## Short aliases
 
-- **`btrfs-defrag` is intentionally excluded** — defragmentation breaks Copy-on-Write on btrfs and increases disk usage
-- `snap-rollback` always requires confirmation — accidental rollbacks are irreversible
-- `function name { }` syntax used throughout — prevents zsh alias/function conflicts on shell reload
-- Paths use `/.snapshots/` — correct location on openSUSE (not `/mnt/.snapshots/`)
+| Alias | Command |
+|---|---|
+| `man-s` | `snap-man` |
+| `snap-l` | `snap-list` |
+| `snap-n` | `snap-new` |
+| `snap-r` | `snap-rollback` |
+| `snap-d` | `snap-del` |
+| `snap-c` | `snap-compare` |
+| `snap-h` | `snap-help` |
+
+---
+
+## Manual
+
+```zsh
+man zsh-manager
+```
+
+The man page (`man/zsh-manager.1`) documents all commands, aliases, stubs, and requirements.
