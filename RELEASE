@@ -1,6 +1,6 @@
-# RELEASE — zsh-snap-man
+# RELEASE — zsh-manager
 
-Version:  v2.1
+Version:  v2.2
 Date:     2026-04-19
 Platform: openSUSE Tumbleweed
 Shell:    zsh 5.9+
@@ -10,12 +10,21 @@ Requires: Oh My Zsh, btrfs-progs, snapper
 
 ## What's in this release
 
+### v2.2 — Btrfs extraction + repo rename zsh-manager (2026-04-19)
+- Repo renamed: zsh-snap-man → zsh-manager (GitHub + local)
+- Btrfs functions extracted to dedicated plugins (hub-and-plugin architecture):
+  - `btrfs-scrub` + aliases → zsh-btrfs-scrub v1.0
+  - `btrfs-balance` + `btrfs-balance-threshold` + aliases → zsh-btrfs-balance v1.0
+  - `btrfs-health` + `btrfs-snap-size` → zsh-btrfs-health v1.0
+- Stubs added for btrfs functions (plugin install guidance)
+- snap-help updated to reference dedicated plugins
+
 ### v2.1 — Rename snap-man + short aliases + banner
-- Renamed plugin and entry point: `btrfs-snapper` → `snap-man` (DEC-016)
+- Renamed plugin and entry point: `btrfs-snapper` → `snap-man`
 - `snap-man` — unified interactive menu: list / create / rollback
-- Short aliases: `snap-m`, `snap-l`, `snap-n`, `snap-r`, `snap-d`, `snap-c` (DEC-016)
+- Short aliases: `snap-m`, `snap-l`, `snap-n`, `snap-r`, `snap-d`, `snap-c`
 - `snap-help` / `man-s` — display all available commands
-- DEC-017 compliant banner (CYAN border, version + date, SafeITExperts)
+- Standard banner (CYAN border, version + date, SafeITExperts)
 
 ### v2.0 — Modular architecture + English translation
 - `snap-list`, `snap-new`, `snap-rollback` extracted to independent plugins

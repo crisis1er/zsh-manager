@@ -4,23 +4,36 @@ All notable changes to this plugin are documented here.
 
 ---
 
+## [2.2] — 2026-04-19
+
+### Changed
+- Btrfs functions extracted to dedicated plugins (hub-and-plugin architecture)
+  - `btrfs-scrub` + aliases → zsh-btrfs-scrub
+  - `btrfs-balance` + `btrfs-balance-threshold` + aliases → zsh-btrfs-balance
+  - `btrfs-health` + `btrfs-snap-size` → zsh-btrfs-health
+- Replaced btrfs function bodies with stubs pointing to dedicated plugins
+- snap-help updated to reference dedicated plugins
+- Repo renamed: zsh-snap-man → zsh-manager (GitHub + local)
+
+---
+
 ## [2.1] — 2026-04-19
 
 ### Changed
-- Renamed plugin directory and entry point: `btrfs-snapper` → `snap-man` (avoids collision with system `snap` command — DEC-016)
-- Renamed unified entry point: `snap()` → `snap-man()` (DEC-016)
+- Renamed plugin directory and entry point: `btrfs-snapper` → `snap-man` (avoids collision with system `snap` command)
+- Renamed unified entry point: `snap()` → `snap-man()`
 
 ### Added
 - `snap-help` — display all available commands with descriptions
 - `man-s` alias — quick access to `snap-help`
-- Short aliases for all commands (DEC-016):
+- Short aliases for all commands:
   - `snap-m` → `snap-man` (unified manager)
   - `snap-l` → `snap-list`
   - `snap-n` → `snap-new`
   - `snap-r` → `snap-rollback`
   - `snap-d` → `snap-del`
   - `snap-c` → `snap-compare`
-- DEC-017 compliant banner (CYAN border, version + date, SafeITExperts)
+- Standard banner (CYAN border, version + date, SafeITExperts)
 
 ---
 

@@ -1,7 +1,7 @@
 # ============================================================
 # snap-man — Oh My Zsh plugin for openSUSE Tumbleweed
 # Snap Manager + Enhanced btrfs and snapper management
-# Version: 2.1 — 2026-04-19
+# Version: 2.2 — 2026-04-19
 # ============================================================
 
 # ------------------------------------------------------------
@@ -21,14 +21,7 @@ alias snap-cleanup-all='sudo snapper cleanup all'
 # Quick rollback (no confirmation — expert use)
 alias rollback-last='sudo snapper rollback'
 
-# Btrfs — monitor ongoing scrub/balance operations
-alias btrfs-scrub-status='sudo btrfs scrub status /'
-alias btrfs-scrub-cancel='sudo btrfs scrub cancel /'
-alias btrfs-scrub-resume='sudo btrfs scrub resume /'
-alias btrfs-balance-status='sudo btrfs balance status /'
-alias btrfs-balance-pause='sudo btrfs balance pause /'
-alias btrfs-balance-resume='sudo btrfs balance resume /'
-alias btrfs-balance-cancel='sudo btrfs balance cancel /'
+# Btrfs aliases moved to their dedicated plugins (zsh-btrfs-scrub, zsh-btrfs-balance)
 
 # ------------------------------------------------------------
 # Enhanced functions — Snapper
@@ -70,7 +63,7 @@ function snap-man {
     echo -e "${CYAN}╔══════════════════════════════════════════════════════════════╗${RESET}"
     echo -e "${CYAN}║${RESET}${BOLD}              Snap Manager — SafeITExperts                     ${RESET}${CYAN}║${RESET}"
     echo -e "${CYAN}║${RESET}              Btrfs Snapshot Manager for openSUSE Tumbleweed  ${CYAN}║${RESET}"
-    echo -e "${CYAN}║${RESET}              Version v2.1 — 2026-04-19                       ${CYAN}║${RESET}"
+    echo -e "${CYAN}║${RESET}              Version v2.2 — 2026-04-19                       ${CYAN}║${RESET}"
     echo -e "${CYAN}╠══════════════════════════════════════════════════════════════╣${RESET}"
     echo -e "${CYAN}║${RESET}  Manage your system snapshots safely from one place.         ${CYAN}║${RESET}"
     echo -e "${CYAN}║${RESET}                                                              ${CYAN}║${RESET}"
@@ -118,64 +111,24 @@ function snap-manual {
 }
 
 # ------------------------------------------------------------
-# Enhanced functions — Btrfs maintenance
+# Stubs — Btrfs maintenance (moved to dedicated plugins)
 # ------------------------------------------------------------
 
-# Start a scrub and follow its status
-# Usage : btrfs-scrub  or  btrfs-scrub /mnt/data
+# These stubs ensure a helpful message if the dedicated plugins are not loaded.
 function btrfs-scrub {
-    local mount="${1:-/}"
-    echo "Starting scrub on $mount..."
-    sudo btrfs scrub start "$mount"
-    sleep 2
-    sudo btrfs scrub status "$mount"
+    echo "zsh-btrfs-scrub plugin not loaded. Install it or add btrfs-scrub to plugins=() in ~/.zshrc"
 }
-
-# Balance with configurable thresholds (default: 50%)
-# Usage : btrfs-balance  or  btrfs-balance 70 70
 function btrfs-balance {
-    local dusage="${1:-50}"
-    local musage="${2:-50}"
-    echo "Btrfs balance: dusage=${dusage}% musage=${musage}%"
-    sudo btrfs balance start -dusage="$dusage" -musage="$musage" /
+    echo "zsh-btrfs-balance plugin not loaded. Install it or add btrfs-balance to plugins=() in ~/.zshrc"
 }
-
-# Conditional balance based on actual disk usage
-# Usage : btrfs-balance-threshold  or  btrfs-balance-threshold 70
 function btrfs-balance-threshold {
-    local threshold="${1:-75}"
-    local usage
-    usage=$(df / | awk 'NR==2 {print $5}' | tr -d '%')
-    if [[ "$usage" -gt "$threshold" ]]; then
-        echo "Usage /: ${usage}% > ${threshold}% — starting balance"
-        sudo btrfs balance start -dusage=5 /
-    else
-        echo "Usage /: ${usage}% < ${threshold}% — balance not needed"
-    fi
+    echo "zsh-btrfs-balance plugin not loaded. Install it or add btrfs-balance to plugins=() in ~/.zshrc"
 }
-
-# Actual disk space used by snapshots (openSUSE path: /.snapshots/)
 function btrfs-snap-size {
-    echo "Snapshot disk usage:"
-    sudo btrfs qgroup show --sort=rfer / 2>/dev/null || \
-        sudo du -sh /.snapshots/*/snapshot 2>/dev/null | sort -h
+    echo "zsh-btrfs-health plugin not loaded. Install it or add btrfs-health to plugins=() in ~/.zshrc"
 }
-
-# Full btrfs health report
 function btrfs-health {
-    echo "=== Btrfs Health Report ==="
-    echo ""
-    echo "--- Filesystem usage ---"
-    sudo btrfs filesystem usage /
-    echo ""
-    echo "--- Device stats (errors) ---"
-    sudo btrfs device stats /
-    echo ""
-    echo "--- Scrub status ---"
-    sudo btrfs scrub status /
-    echo ""
-    echo "--- Snapshots ---"
-    snap-list
+    echo "zsh-btrfs-health plugin not loaded. Install it or add btrfs-health to plugins=() in ~/.zshrc"
 }
 
 # ── snap-help — list all available commands ───────────────────────────────────
@@ -193,11 +146,9 @@ function snap-help {
     echo -e "  ${CYAN}snap-important${RESET}   — list important snapshots only"
     echo -e "  ${CYAN}snap-manual${RESET}      — list manual snapshots only"
     echo ""
-    echo -e "  ${CYAN}btrfs-health${RESET}              — full btrfs health report"
-    echo -e "  ${CYAN}btrfs-scrub${RESET}               — start scrub and show status"
-    echo -e "  ${CYAN}btrfs-balance${RESET}             — balance with configurable thresholds"
-    echo -e "  ${CYAN}btrfs-balance-threshold${RESET}   — conditional balance by disk usage"
-    echo -e "  ${CYAN}btrfs-snap-size${RESET}           — disk space used by snapshots"
+    echo -e "  ${CYAN}btrfs-health${RESET}              — full report (plugin: zsh-btrfs-health)"
+    echo -e "  ${CYAN}btrfs-scrub${RESET}               — scrub (plugin: zsh-btrfs-scrub)"
+    echo -e "  ${CYAN}btrfs-balance${RESET}             — balance (plugin: zsh-btrfs-balance)"
 }
 
 # ------------------------------------------------------------
